@@ -8,7 +8,7 @@ A customer enters a new credit/debit card, selects to save details in PostBillPa
 
 ## Rendered Diagram
 
-![Stored Card Flow - Option 1](./stored-card-option1.svg)
+![Stored Card Flow - Option 1](./stored-card-option1.png)
 
 ## Mermaid Source
 
@@ -53,4 +53,4 @@ sequenceDiagram
 ## Source Files
 
 - Mermaid source: [`stored-card-option1.mmd`](./stored-card-option1.mmd)
-- Rendered SVG: [`stored-card-option1.svg`](./stored-card-option1.svg)
+- Rendered PNG: [`stored-card-option1.png`](./stored-card-option1.png)
