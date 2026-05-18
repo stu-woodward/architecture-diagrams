@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1050" viewBox="0 0 1400 1050">
+  <style>
+    text { font-family: Arial, Helvetica, sans-serif; fill: #172B4D; }
+    .title { font-size: 26px; font-weight: 700; }
+    .participant { font-size: 16px; font-weight: 700; }
+    .message { font-size: 14px; }
+    .note { font-size: 14px; }
+    .box { fill: #F4F5F7; stroke: #42526E; stroke-width: 1.5; rx: 8; }
+    .noteBox { fill: #FFFAE6; stroke: #FFAB00; stroke-width: 1.5; rx: 8; }
+    .lifeline { stroke: #A5ADBA; stroke-width: 1; stroke-dasharray: 6 6; }
+    .arrow { stroke: #172B4D; stroke-width: 1.8; fill: none; marker-end: url(#arrow); }
+    .return { stroke: #172B4D; stroke-width: 1.8; stroke-dasharray: 6 4; fill: none; marker-end: url(#arrow); }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#172B4D" />
+    </marker>
+  </defs>
+
+  <text x="700" y="45" text-anchor="middle" class="title">Stored Card Flow - Option 1: No Card Stored</text>
+
+  <!-- Participants -->
+  <g id="participants">
+    <rect x="60" y="80" width="140" height="44" class="box" />
+    <text x="130" y="108" text-anchor="middle" class="participant">Customer01</text>
+    <line x1="130" y1="124" x2="130" y2="985" class="lifeline" />
+
+    <rect x="260" y="80" width="150" height="44" class="box" />
+    <text x="335" y="108" text-anchor="middle" class="participant">PostBillPay</text>
+    <line x1="335" y1="124" x2="335" y2="985" class="lifeline" />
+
+    <rect x="505" y="80" width="120" height="44" class="box" />
+    <text x="565" y="108" text-anchor="middle" class="participant">SP dB</text>
+    <line x1="565" y1="124" x2="565" y2="985" class="lifeline" />
+
+    <rect x="745" y="80" width="160" height="44" class="box" />
+    <text x="825" y="108" text-anchor="middle" class="participant">Paynow iFrame</text>
+    <line x1="825" y1="124" x2="825" y2="985" class="lifeline" />
+
+    <rect x="1040" y="80" width="160" height="44" class="box" />
+    <text x="1120" y="108" text-anchor="middle" class="participant">FZ Processing</text>
+    <line x1="1120" y1="124" x2="1120" y2="985" class="lifeline" />
+  </g>
+
+  <!-- Notes -->
+  <rect x="110" y="145" width="230" height="38" class="noteBox" />
+  <text x="225" y="169" text-anchor="middle" class="note">Billpay Code = 8881</text>
+
+  <rect x="500" y="145" width="150" height="38" class="noteBox" />
+  <text x="575" y="169" text-anchor="middle" class="note">Merchant ID = ZZZ</text>
+
+  <!-- Messages -->
+  <text x="170" y="222" class="message">1. Choose Billpay code (8881)</text>
+  <line x1="130" y1="235" x2="335" y2="235" class="arrow" />
+
+  <text x="350" y="282" class="message">2. Determine Merchant ID from Billpay code</text>
+  <line x1="335" y1="295" x2="565" y2="295" class="arrow" />
+
+  <text x="365" y="342" class="message">3. Merchant ID = ZZZ</text>
+  <line x1="565" y1="355" x2="335" y2="355" class="return" />
+
+  <text x="150" y="402" class="message">4. Choose payment method: New credit/debit card</text>
+  <line x1="130" y1="415" x2="335" y2="415" class="arrow" />
+
+  <text x="445" y="462" class="message">5. Initialise iFrame</text>
+  <line x1="335" y1="475" x2="825" y2="475" class="arrow" />
+
+  <rect x="845" y="490" width="245" height="54" class="noteBox" />
+  <text x="967" y="512" text-anchor="middle" class="note">Payment + 3DS + Alias</text>
+  <text x="967" y="532" text-anchor="middle" class="note">+ Merchant ID</text>
+
+  <text x="410" y="582" class="message">6. Render Paynow iFrame</text>
+  <line x1="825" y1="595" x2="130" y2="595" class="return" />
+
+  <text x="405" y="642" class="message">7. Enter card details</text>
+  <line x1="130" y1="655" x2="825" y2="655" class="arrow" />
+
+  <text x="145" y="702" class="message">8. Select Save details and continue</text>
+  <line x1="130" y1="715" x2="335" y2="715" class="arrow" />
+
+  <text x="855" y="762" class="message">9. Process payment with 3DS + alias creation</text>
+  <line x1="825" y1="775" x2="1120" y2="775" class="arrow" />
+
+  <text x="850" y="822" class="message">10. Payment result + alias</text>
+  <line x1="1120" y1="835" x2="825" y2="835" class="return" />
+
+  <text x="420" y="882" class="message">11. Return payment result + alias</text>
+  <line x1="825" y1="895" x2="335" y2="895" class="return" />
+
+  <text x="355" y="942" class="message">12. Store alias against Billpay Code 8881 and Merchant ID ZZZ</text>
+  <line x1="335" y1="955" x2="565" y2="955" class="arrow" />
+
+  <text x="365" y="1002" class="message">13. Stored card available</text>
+  <line x1="565" y1="1015" x2="335" y2="1015" class="return" />
+
+  <text x="145" y="1042" class="message">14. Payment complete</text>
+  <line x1="335" y1="1030" x2="130" y2="1030" class="return" />
+</svg>
