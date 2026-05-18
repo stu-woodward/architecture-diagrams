@@ -4,7 +4,11 @@ on:
   push:
     paths:
       - "**/*.mmd"
+      - ".github/workflows/render-mermaid.yml"
   workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
   contents: write
@@ -17,20 +21,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-          npm install -g @mermaid-js/mermaid-cli
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install Mermaid CLI
+        run: npm install -g @mermaid-js/mermaid-cli
 
       - name: Render Mermaid files to PNG
-        env:
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
         run: |
           find . -name "*.mmd" -print0 | while IFS= read -r -d '' file; do
             output="${file%.mmd}.png"
             echo "Rendering $file -> $output"
-            mmdc -i "$file" -o "$output" -b white
+            mmdc -p puppeteer-config.json -i "$file" -o "$output" -b white
           done
 
       - name: Commit generated PNGs
