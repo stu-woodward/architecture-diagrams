@@ -29,7 +29,7 @@ sequenceDiagram
 
     Paynow-->>PBP: Return payment result + alias
 
-    PBP->>SPDB: Store alias against Billpay Code 8881 and Merchant ID ZZZ
+    PBP->>SPDB: Store alias against Merchant ID ZZZ
     SPDB-->>PBP: Stored card available
 
     PBP-->>Customer: Payment complete
