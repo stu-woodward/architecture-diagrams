@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+
+    participant Customer as Customer01
+    participant PBP as PostBillPay
+    participant SPDB as SP dB
+    participant Paynow as Paynow iFrame
+    participant FZ as FZ Processing
+
+    Note over Customer,PBP: Billpay Code = 8881
+    Note over SPDB: Payment Merchant ID = ZZZ
+    Note over SPDB,FZ: Card Storage Merchant ID = VPB
+
+    Customer->>PBP: Choose Billpay code (8881)
+
+    PBP->>SPDB: Determine Payment Merchant ID from Billpay code
+    SPDB-->>PBP: Payment Merchant ID = ZZZ
+
+    Customer->>PBP: Choose payment method: New credit/debit card
+
+    PBP->>Paynow: Initialise iFrame
+    Note right of Paynow: Alias + Token + Storage Merchant ID VPB
+
+    Paynow-->>Customer: Render Paynow iFrame
+
+    Customer->>Paynow: Enter card details
+    Customer->>PBP: Select Save details and continue
+
+    Paynow->>FZ: Store card against Merchant ID VPB
+    FZ-->>Paynow: Alias + token
+
+    Paynow-->>PBP: Return alias + token
+
+    PBP->>SPDB: Store alias, token, Billpay Code 8881, and Payment Merchant ID ZZZ
+    SPDB-->>PBP: Stored card available for Billpay Code 8881
+
+    PBP->>FZ: Process payment using token against Merchant ID ZZZ
+    FZ-->>PBP: Payment result
+
+    PBP-->>Customer: Payment complete
