@@ -1,38 +1,26 @@
 sequenceDiagram
-    autonumber
-
-    participant Customer as Customer01
-    participant PBP as PostBillPay
+    participant Customer01
+    participant PostBillPay
     participant XML
     participant SPDB as SP dB
-    participant Paynow as Paynow iFrame
     participant FZ as FZ Processing
 
-    Note over Customer,PBP: Billpay Code = 8881
-    Note over SPDB: Merchant ID = ZZZ
+    Note over Customer01,PostBillPay: Billpay Code = 8881
 
-    Customer->>PBP: Choose Billpay code (8881)
-    PBP->>SPDB: Determine Merchant ID from Billpay code
-    SPDB-->>PBP: Merchant ID = ZZZ
+    Customer01->>PostBillPay: 1. Choose Billpay code (8881)
 
-    Customer->>PBP: Choose payment method: Stored card
+    PostBillPay->>SPDB: 2. Determine Merchant ID from Billpay code
+    SPDB-->>PostBillPay: 3. Merchant ID = ZZZ
 
-    PBP->>Paynow: Initialise iFrame
-    Note right of Paynow: Payment + Alias + Merchant ID (tokenise only)
+    Customer01->>PostBillPay: 4. Choose payment method: Stored card
 
-    Paynow-->>Customer: Render Paynow iFrame
+    PostBillPay->>SPDB: 5. Retrieve stored alias for Payor
+    SPDB-->>PostBillPay: 6. Stored alias returned
 
-    Customer->>Paynow: Enter card details
-    Customer->>PBP: Continue
+    PostBillPay->>XML: 7. Create XML payment using alias for FZ Processing
 
-    Paynow->>FZ: Process alias retrieval
-    FZ-->>Paynow: Alias / token
+    XML->>FZ: 8. Process XML payment using alias
+    FZ-->>XML: 9. Processing complete
 
-    Paynow-->>PBP: Return alias / token
-
-    PBP->>XML: Create XML payment using alias against FZ Processing
-    XML->>FZ: Process XML payment using alias
-    FZ-->>XML: Processing complete
-
-    XML-->>PBP: Payment complete
-    PBP-->>Customer: Payment complete
+    XML-->>PostBillPay: 10. Payment complete
+    PostBillPay-->>Customer01: 11. Payment complete
