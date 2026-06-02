@@ -6,6 +6,7 @@ sequenceDiagram
     participant FZ as FZ Processing
 
     Note over Customer01,PostBillPay: Billpay Code = 8881
+    Note over SPDB,FZ: Alias = EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF
 
     Customer01->>PostBillPay: 1. Choose Billpay code (8881)
 
@@ -15,11 +16,11 @@ sequenceDiagram
     Customer01->>PostBillPay: 4. Choose payment method: Stored card
 
     PostBillPay->>SPDB: 5. Retrieve stored alias for Payor
-    SPDB-->>PostBillPay: 6. Stored alias returned
+    SPDB-->>PostBillPay: 6. Alias EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF returned
 
-    PostBillPay->>XML: 7. Create XML payment using alias for FZ Processing
+    PostBillPay->>XML: 7. Create XML payment using alias EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF for FZ Processing
 
-    XML->>FZ: 8. Process XML payment using alias
+    XML->>FZ: 8. Process XML payment using alias EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF
     FZ-->>XML: 9. Processing complete
 
     XML-->>PostBillPay: 10. Payment complete
