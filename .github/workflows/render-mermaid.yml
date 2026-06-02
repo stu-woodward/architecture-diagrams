@@ -7,9 +7,6 @@ on:
       - ".github/workflows/render-mermaid.yml"
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 permissions:
   contents: write
 
@@ -18,13 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
+      - name: Clone repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
+          git checkout "${GITHUB_REF_NAME}"
 
       - name: Install Mermaid CLI
         run: npm install -g @mermaid-js/mermaid-cli
@@ -38,7 +34,13 @@ jobs:
           done
 
       - name: Commit generated PNGs
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Render Mermaid diagrams"
-          file_pattern: "**/*.png"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '**/*.png'
+          if git diff --cached --quiet; then
+            echo "No PNG changes to commit"
+          else
+            git commit -m "Render Mermaid diagrams"
+            git push origin "${GITHUB_REF_NAME}"
+          fi
