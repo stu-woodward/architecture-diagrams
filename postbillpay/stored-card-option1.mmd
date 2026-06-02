@@ -9,6 +9,7 @@ sequenceDiagram
 
     Note over Customer,PBP: Billpay Code = 8881
     Note over SPDB: Merchant ID = ZZZ
+    Note over SPDB,FZ: Alias = EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF
 
     Customer->>PBP: Choose Billpay code (8881)
     PBP->>SPDB: Determine Merchant ID from Billpay code
@@ -25,11 +26,11 @@ sequenceDiagram
     Customer->>PBP: Select Save details and continue
 
     Paynow->>FZ: Process payment with 3DS + alias creation
-    FZ-->>Paynow: Payment result + alias
+    FZ-->>Paynow: Payment result + alias EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF
 
-    Paynow-->>PBP: Return payment result + alias
+    Paynow-->>PBP: Return payment result + alias EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF
 
-    PBP->>SPDB: Store alias against Merchant ID ZZZ
+    PBP->>SPDB: Store alias EE1EE5A6-AED5-4561-AD6D-EDB1DD647AF against Merchant ID ZZZ
     SPDB-->>PBP: Stored card available
 
     PBP-->>Customer: Payment complete
